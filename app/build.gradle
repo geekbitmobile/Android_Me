@@ -21,12 +21,48 @@ android {
     }
 }
 
+ext {
+    architecture_components = "1.0.0-beta2"
+    toothpick = "1.0.8"
+    memory_leak = "1.5.4"
+    timber = "4.5.1"
+}
+
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
     implementation 'com.android.support:appcompat-v7:26.1.0'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    // Memory Leaking debug
+    debugImplementation "com.squareup.leakcanary:leakcanary-android:$memory_leak"
+    releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$memory_leak"
+    // DI
+    implementation "com.github.stephanenicolas.toothpick:smoothie:$toothpick"
+    annotationProcessor "com.github.stephanenicolas.toothpick:toothpick-compiler:$toothpick"
+    // Rx
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.3'
+    implementation 'io.reactivex.rxjava2:rxkotlin:2.1.0'
+    implementation 'com.jakewharton.rxbinding2:rxbinding:2.0.0'
+    // Logging
+    implementation "com.jakewharton.timber:timber:$timber"
+    // Lifecycle
+    implementation "android.arch.lifecycle:extensions:$architecture_components"
+    annotationProcessor "android.arch.lifecycle:compiler:$architecture_components"
+    // Room ORM
+    implementation "android.arch.persistence.room:runtime:$architecture_components"
+    implementation "android.arch.persistence.room:rxjava2:$architecture_components"
+    annotationProcessor "android.arch.persistence.room:compiler:$architecture_components"
+    // JSON
+    implementation 'com.google.code.gson:gson:2.8.2'
+    // Image
+    implementation 'com.github.bumptech.glide:glide:4.2.0'
+    // Testing environment
     testImplementation 'junit:junit:4.12'
+    testImplementation "android.arch.core:core-testing:$architecture_components"
+    testImplementation "android.arch.persistence.room:testing:$architecture_components"
+    testImplementation 'org.mockito:mockito-core:2.8.47'
+    testImplementation "com.github.stephanenicolas.toothpick:toothpick-testing:$toothpick"
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
 }
